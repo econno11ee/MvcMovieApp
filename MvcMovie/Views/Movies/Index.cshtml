@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MvcMovie.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@* declare ng-controller*@
+
+<div ng-controller="MoviesController">
+    <h2>Movies Index</h2>
+
+    <form>
+        <div class="form-group">
+            @*bind data to view*@
+            @*<p>
+                @Html.ActionLink("Create New", "Create")
+                @using (Html.BeginForm("Index", "Movies", FormMethod.Get))
+                {
+                <p>
+                    Genre: @Html.DropDownList("movieGenre", "All")
+                    Title: @Html.TextBox("SearchString") <br />
+                    <input type="submit" value="Filter" />
+                </p>
+                }
+                </p>*@
+        </div>
+    </form>
+    <div class="container-fluid">
+        <div class="row">
+            <h4 class="col-md-3">Title</h4>
+            <h4 class="col-md-2">Release Date</h4>
+            <h4 class="col-md-2">Genre</h4>
+            <h4 class="col-md-2">Price</h4>
+            <h4 class="col-md-3">Rating</h4>
+
+        </div>
+        <div class="movies" ng-repeat="movie in movieData">
+            <div class="day row">
+                <div class="col-md-3">{{ movie.Title }}</div>
+                <div class="col-md-2">{{ movie.ReleaseDate | date: 'yyy-MM-dd' }}</div>
+                <div class="col-md-2">{{  movie.Genre }}</div>
+                <div class="col-md-2">{{  movie.Price | currency}}</div>
+                <div class="col-md-3">{{ movie.Rating}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
