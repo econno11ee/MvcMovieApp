@@ -2,6 +2,10 @@
 //here, $scope is used to share data between view and controller
 app.controller("MoviesController", function ($scope, moviesfactory) {
     $scope.movieData = [];
+    
+
+   
+    //Get Code
     $scope.getMovies = function (doThis) {
         moviesfactory.ajaxCalltoMoviesController(doThis);
     };
@@ -10,7 +14,8 @@ app.controller("MoviesController", function ($scope, moviesfactory) {
     };
 
     $scope.getMovies($scope.assignTomovieData);
-
+    
+    
 });
 
 
