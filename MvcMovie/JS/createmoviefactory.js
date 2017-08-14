@@ -2,18 +2,19 @@
     return {
         postToMoviesController: function (Movie,callBack) {
             var url = "http://localhost:50941/Movies/CreateNew"
-            
+            console.log(Movie)
             $http({
-                method: 'POST', url: url, data: JSON.stringify(Movie), headers: { 'Content-Type': 'application/json' }
+                method: 'POST', url: url, data: Movie, headers: { 'Content-Type': 'application/json' }
             }).
                 then(function (response) {
+
                     
-                    callBack(response.statusText);
-                    window.location.href = ("/Movies/Index");
+                    callBack(response.statusText);           
                     
                     
 
-                }).catch(function (response) { });
+                }).catch(function (response) {
+                });
         }
     };
 });

@@ -8,17 +8,17 @@
     <h2>Add Movie</h2>
     <div id="messages" class="alert alert-success" ng-show="messages" ng-bind="messages"></div>
 <div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Sending…</div>
-    <form novalidate class="simple-form" name="helpForm">
-        <div class="form-group">
-            <label for="Title">Title</label>
-            <input type="text" class="form-control" id="title" ng-model="Movie.Title" ng-model-options="{ getterSetter: true }" required/>
-            <span class="label label-danger" ng-show="submitted && Movie.name.$error.required">Required!</span>
+    <form class="simple-form" name="createForm" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : createForm.Title.$invalid || createForm.Title.$pristine }">
+            <label>Title</label>
+            <input type="text" class="form-control" id="title" ng-model="Movie.Title" name="Title" required/>
+            <p class="label label-danger" ng-show="createForm.Title.$invalid || createForm.Title.$pristine">Required!</p>
         </div>
 
-        <div class="form-group" name="form">
-            <label for="Release Date">Release Date</label>
-            <input type="text" class="form-control" id="releaseDate" ng-model="Movie.ReleaseDate" value="yyyy-mm-dd" name="realeasedate" date />
-            <span class="label label-danger" ng-show="Movie.releasedate.$error.date">Date must be entered as yyyy-mm-dd</span>
+        <div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.ReleaseDate.$invalid && !createForm.ReleaseDate.$pristine }">
+            <label>Release Date</label>
+            <input type="date" class="form-control" name="releaseDate" ng-model="Movie.ReleaseDate" placeholder="yyyy-mm-dd" min="1800-01-01" />
+            <span class="label label-danger" ng-show="helpForm.Movie.Releasedate.$error.date">Date must be entered as yyyy-MM-dd</span>
         </div>
 
 
@@ -29,9 +29,9 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.Price.$invalid && !createForm.Price.$pristine }">
             <label for="Price">Price</label>
-            <input type="text" class="form-control" id="price" ng-model="Movie.Price"/>
+            <input type="number" class="form-control" id="price" ng-model=Movie.Price>
         </div>
         <div class="form-group">
             <label for="Rating">Rating</label>
@@ -39,7 +39,7 @@
         </div>
        
 
-        <button ng-disabled="progress.active()" type="submit" ng-click="create(Movie)" class="btn btn-default">Submit</button>
+        <button ng-disabled="createForm.$invalid" type="submit" ng-click="submit(Movie)" class="btn btn-default">Submit</button>
     </form>
 </div>
 
