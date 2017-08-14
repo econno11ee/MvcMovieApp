@@ -2,7 +2,7 @@
 //here, $scope is used to share data between view and controller
 app.controller("MoviesController", function ($scope, moviesfactory) {
     $scope.movieData = [];
-    
+    $scope.addMovieButton ="/Movies/Create"
 
    
     //Get Code
@@ -15,7 +15,21 @@ app.controller("MoviesController", function ($scope, moviesfactory) {
 
     $scope.getMovies($scope.assignTomovieData);
     
-    
+  
 });
 
+app.directive('goClick', function ($window) {
+    return function (scope, element, attrs) {
+      
 
+        //attrs.$observe('goClick', function (val) {
+        //    path = val;
+        //});
+
+        element.bind('click', function () {
+            scope.$apply(function () {
+                $window.location.href= attrs.goClick;
+            });
+        })
+    };
+});

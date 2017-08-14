@@ -6,24 +6,26 @@
 
 <div ng-controller="CreateMovieCtrl" class="container">
     <h2>Add Movie</h2>
-    <form novalidate class="simple-form">
+    <div id="messages" class="alert alert-success" ng-show="messages" ng-bind="messages"></div>
+<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Sending…</div>
+    <form novalidate class="simple-form" name="helpForm">
         <div class="form-group">
             <label for="Title">Title</label>
             <input type="text" class="form-control" id="title" ng-model="Movie.Title" ng-model-options="{ getterSetter: true }" required/>
-            <span class="label label-danger" data-ng-show="submitted && helpForm.name.$error.required">Required!</span>
+            <span class="label label-danger" ng-show="submitted && Movie.name.$error.required">Required!</span>
         </div>
 
-        <div class="form" name="form-group">
+        <div class="form-group" name="form">
             <label for="Release Date">Release Date</label>
             <input type="text" class="form-control" id="releaseDate" ng-model="Movie.ReleaseDate" value="yyyy-mm-dd" name="realeasedate" date />
-            <span class="label label-danger" ng-show="form.releasedate.$error.date">Enter release date as yyyy-mm-dd</span>
+            <span class="label label-danger" ng-show="Movie.releasedate.$error.date">Date must be entered as yyyy-mm-dd</span>
         </div>
 
 
         <div class="form-group">
             <label for="Genre">Genre</label>
             <select type="text" class="form-control" id="genre" ng-model="Movie.Genre">
-                <option ng-repeat="genre in availableGenres">{{genre.name}}</option>
+                <option ng-repeat="genre in availableGenres" value="{{genre.name}}">{{genre.name}}</option>
             </select>
         </div>
 
@@ -37,7 +39,7 @@
         </div>
        
 
-        <button data-ng-disabled="progress.active()" type="submit" ng-click="create(Movie)" class="btn btn-success">Submit</button>
+        <button ng-disabled="progress.active()" type="submit" ng-click="create(Movie)" class="btn btn-default">Submit</button>
     </form>
 </div>
 

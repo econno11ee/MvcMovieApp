@@ -13,7 +13,7 @@
     <form>
         <div class="form-group">
             
-            <button ng-model="button" ng-href="~/Movies/Create">Add a Movie</button>
+            <button ng-model="button" go-click={{addMovieButton}}>Add a Movie</button>
               
                     @*Genre: @Html.DropDownList("movieGenre", "All")
                     Title: @Html.TextBox("SearchString") <br />
@@ -40,8 +40,8 @@
                 <div class="col-md-1">{{ movie.Rating}}</div>
                 <div class="col-md-2">
                     <a ng-href="/Movies/Edit/{{movie.MovieID}}">Edit</a>
-                    <a ng-href="~/Movies/Details/{{movie.MovieID}}">Details</a>
-                    <a ng-href="~/Movies/Delete/{{movie.MovieID}}">Delete</a>
+                    <a ng-href="/Movies/Details/{{movie.MovieID}}">Details</a>
+                    <a ng-href="/Movies/Delete/{{movie.MovieID}}">Delete</a>
                 </div>
             </div>
         </div>

@@ -228,6 +228,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="JS\app.js" />
+    <Content Include="JS\promise-tracker.js" />
     <Content Include="JS\moviegenresfactory.js" />
     <Content Include="JS\editmoviefactory.js" />
     <Content Include="JS\deletemoviefactory.js" />
