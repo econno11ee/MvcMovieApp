@@ -12,18 +12,14 @@
 
     <form>
         <div class="form-group">
-            @*bind data to view*@
-            @*<p>
-                @Html.ActionLink("Create New", "Create")
-                @using (Html.BeginForm("Index", "Movies", FormMethod.Get))
-                {
-                <p>
-                    Genre: @Html.DropDownList("movieGenre", "All")
+            
+            <button ng-model="button" go-click={{addMovieButton}}>Add a Movie</button>
+              
+                    @*Genre: @Html.DropDownList("movieGenre", "All")
                     Title: @Html.TextBox("SearchString") <br />
-                    <input type="submit" value="Filter" />
-                </p>
-                }
-                </p>*@
+                    <input type="submit" value="Filter" />*@
+           
+             
         </div>
     </form>
     <div class="container-fluid">
@@ -38,10 +34,15 @@
         <div class="movies" ng-repeat="movie in movieData">
             <div class="day row">
                 <div class="col-md-3">{{ movie.Title }}</div>
-                <div class="col-md-2">{{ movie.ReleaseDate | date: 'yyy-MM-dd' }}</div>
+                <div class="col-md-2">{{ movie.ReleaseDate | date: 'yyyy-MM-dd' }}</div>
                 <div class="col-md-2">{{  movie.Genre }}</div>
-                <div class="col-md-2">{{  movie.Price | currency}}</div>
-                <div class="col-md-3">{{ movie.Rating}}</div>
+                <div class="col-md-1">{{  movie.Price | currency}}</div>
+                <div class="col-md-1">{{ movie.Rating}}</div>
+                <div class="col-md-2">
+                    <a ng-href="/Movies/Edit/{{movie.MovieID}}">Edit</a>
+                    <a ng-href="/Movies/Details/{{movie.MovieID}}">Details</a>
+                    <a ng-href="/Movies/Delete/{{movie.MovieID}}">Delete</a>
+                </div>
             </div>
         </div>
     </div>

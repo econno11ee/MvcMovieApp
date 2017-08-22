@@ -46,20 +46,24 @@ namespace MvcMovie.Controllers
 
         // GET: Movies/Details/5
         public ActionResult Details(int? id)
+        { return View("~/Views/Movies/Details.cshtml"); }
+
+
+        public ActionResult GetDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Movie movy = db.Movies.Find(id);
-            if (movy == null)
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
             {
                 return HttpNotFound();
             }
-            return View(movy);
+            return Json(movie, JsonRequestBehavior.AllowGet); ;
         }
 
-        // GET: Movies/Create
+        //GET: Movies/Create
         public ActionResult Create()
         {
             return View();
@@ -69,72 +73,49 @@ namespace MvcMovie.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MovieID,Title,ReleaseDate,Genre,Price,Rating")] Movie movy)
+        
+        public ActionResult CreateNew(Movie movie)
         {
-            if (ModelState.IsValid)
-            {
-                db.Movies.Add(movy);
+           
+           
+                db.Movies.Add(movie);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(movy);
+                return RedirectToAction("Index", new Movie());
+           
         }
 
         // GET: Movies/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Movie movy = db.Movies.Find(id);
-            if (movy == null)
-            {
-                return HttpNotFound();
-            }
-            return View(movy);
+      
+            return View("~/Views/Movies/Edit.cshtml");
         }
 
         // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MovieID,Title,ReleaseDate,Genre,Price,Rating")] Movie movy)
+        [HttpPut]
+         public ActionResult UpdateMovie(Movie movie)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(movy).State = EntityState.Modified;
+            
+                db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View(movy);
+           
         }
 
         // GET: Movies/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Movie movy = db.Movies.Find(id);
-            if (movy == null)
-            {
-                return HttpNotFound();
-            }
-            return View(movy);
+            return View("~/Views/Movies/Delete.cshtml");
         }
 
         // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+       
+        public ActionResult RemoveData(int id)
         {
-            Movie movy = db.Movies.Find(id);
-            db.Movies.Remove(movy);
+            Movie movie = db.Movies.Find(id);
+            db.Movies.Remove(movie);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
