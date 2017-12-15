@@ -6,127 +6,141 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using MvcMovie.DAL;
 using MvcMovie.Models;
 
 namespace MvcMovie.Controllers
 {
-    public class MoviesController : Controller
-    {
-        private MovieDBContext db = new MovieDBContext();
+	public class MoviesController : Controller
+	{
+		//private MovieDBContext db = new MovieDBContext();
 
-        // GET: Movies
-        public ActionResult Index()
-        { return View("~/Views/Movies/Index.cshtml"); }
-        public ActionResult GetData(string movieGenre, string searchString)
-        {
-            var GenreLst = new List<string>();
+		private IMovieRepository repo;
 
-            var GenreQry = from d in db.Movies
-                           orderby d.Genre
-                           select d.Genre;
+		public MoviesController()
+		{
+			this.repo = new MovieRepository(new MovieDBContext());
+		}
 
-            GenreLst.AddRange(GenreQry.Distinct());
-            ViewBag.movieGenre = new SelectList(GenreLst);
-
-            var movies = from m in db.Movies
-                         select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                movies = movies.Where(s => s.Title.Contains(searchString));
-            }
-
-            if (!string.IsNullOrEmpty(movieGenre))
-            {
-                movies = movies.Where(x => x.Genre == movieGenre);
-            }
-
-            return Json(movies, JsonRequestBehavior.AllowGet);
-        }
-
-        // GET: Movies/Details/5
-        public ActionResult Details(int? id)
-        { return View("~/Views/Movies/Details.cshtml"); }
+		public MoviesController(IMovieRepository repo)
+		{
+			this.repo = repo;
+		}
 
 
-        public ActionResult GetDetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Movie movie = db.Movies.Find(id);
-            if (movie == null)
-            {
-                return HttpNotFound();
-            }
-            return Json(movie, JsonRequestBehavior.AllowGet); ;
-        }
+		// GET: Movies
+		public ActionResult Index()
+		{ return View("~/Views/Movies/Index.cshtml"); }
+		public ActionResult GetData(string movieGenre, string searchString)
+		{
+			var GenreLst = new List<string>();
 
-        //GET: Movies/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+			var GenreQry = from m in repo.GetMovies()
+						   orderby m.Genre
+						   select m.Genre;
 
-        // POST: Movies/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        
-        public ActionResult CreateNew(Movie movie)
-        {
-           
-           
-                db.Movies.Add(movie);
-                db.SaveChanges();
-                return RedirectToAction("Index", new Movie());
-           
-        }
+			GenreLst.AddRange(GenreQry.Distinct());
+			ViewBag.movieGenre = new SelectList(GenreLst);
 
-        // GET: Movies/Edit/5
-        public ActionResult Edit(int? id)
-        {
-      
-            return View("~/Views/Movies/Edit.cshtml");
-        }
+			var movies = from m in repo.GetMovies()
+						 select m;
 
-        // POST: Movies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPut]
-         public ActionResult UpdateMovie(Movie movie)
-        {
-            
-                db.Entry(movie).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-           
-        }
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				movies = movies.Where(s => s.Title.Contains(searchString));
+			}
 
-        // GET: Movies/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            return View("~/Views/Movies/Delete.cshtml");
-        }
+			if (!string.IsNullOrEmpty(movieGenre))
+			{
+				movies = movies.Where(x => x.Genre == movieGenre);
+			}
 
-        // POST: Movies/Delete/5
-       
-        public ActionResult RemoveData(int id)
-        {
-            Movie movie = db.Movies.Find(id);
-            db.Movies.Remove(movie);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+			return Json(movies, JsonRequestBehavior.AllowGet);
+		}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
+		// GET: Movies/Details/5
+		public ActionResult Details(int? id)
+		{ return View("~/Views/Movies/Details.cshtml"); }
+
+
+		public ActionResult GetDetails(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Movie movie = repo.GetMovieDetails(id);
+			if (movie == null)
+			{
+				return HttpNotFound();
+			}
+			return Json(movie, JsonRequestBehavior.AllowGet); ;
+		}
+
+		//GET: Movies/Create
+		public ActionResult Create()
+		{
+			return View();
+		}
+
+		// POST: Movies/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		
+		public ActionResult CreateNew(Movie movie)
+		{
+		   
+		   
+				repo.CreateMovie(movie);
+				repo.Save();
+				return RedirectToAction("Index", new Movie());
+		   
+		}
+
+		// GET: Movies/Edit/5
+		public ActionResult Edit(int? id)
+		{
+	  
+			return View("~/Views/Movies/Edit.cshtml");
+		}
+
+		// POST: Movies/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPut]
+		 public ActionResult UpdateMovie(Movie movie)
+		{
+			
+				repo.UpdateMovie(movie);
+				repo.Save();
+				return RedirectToAction("Index");
+		   
+		}
+
+		// GET: Movies/Delete/5
+		public ActionResult Delete(int? id)
+		{
+			return View("~/Views/Movies/Delete.cshtml");
+		}
+
+		// POST: Movies/Delete/5
+	   
+		public ActionResult RemoveData(int id)
+		{
+	
+			repo.DeleteMovie(id);
+			repo.Save();
+			return RedirectToAction("Index");
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				repo.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+	}
 }
