@@ -13,16 +13,15 @@ namespace MvcMovie.Controllers
 {
 	public class MoviesController : Controller
 	{
-		//private MovieDBContext db = new MovieDBContext();
 
-		private IMovieRepository repo;
+		private MediaTypeRepository repo;
 
 		public MoviesController()
 		{
-			this.repo = new MovieRepository(new MovieDBContext());
+			this.repo = new MediaTypeRepository(new MediaTypeDBContext());
 		}
 
-		public MoviesController(IMovieRepository repo)
+		public MoviesController(MediaTypeRepository repo)
 		{
 			this.repo = repo;
 		}
@@ -35,14 +34,16 @@ namespace MvcMovie.Controllers
 		{
 			var GenreLst = new List<string>();
 
-			var GenreQry = from m in repo.GetMovies()
+			var GenreQry = from m in repo.GetMediaTypes()
+						   where m is Movie
 						   orderby m.Genre
 						   select m.Genre;
 
 			GenreLst.AddRange(GenreQry.Distinct());
 			ViewBag.movieGenre = new SelectList(GenreLst);
 
-			var movies = from m in repo.GetMovies()
+			var movies = from m in repo.GetMediaTypes()
+						 where m is Movie
 						 select m;
 
 			if (!String.IsNullOrEmpty(searchString))
@@ -69,7 +70,7 @@ namespace MvcMovie.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Movie movie = repo.GetMovieDetails(id);
+			Movie movie = (Movie) repo.GetMediaTypeDetails(id);
 			if (movie == null)
 			{
 				return HttpNotFound();
@@ -92,7 +93,7 @@ namespace MvcMovie.Controllers
 		{
 		   
 		   
-				repo.CreateMovie(movie);
+				repo.CreateMediaType(movie);
 				repo.Save();
 				return RedirectToAction("Index", new Movie());
 		   
@@ -112,7 +113,7 @@ namespace MvcMovie.Controllers
 		 public ActionResult UpdateMovie(Movie movie)
 		{
 			
-				repo.UpdateMovie(movie);
+				repo.UpdateMediaType(movie);
 				repo.Save();
 				return RedirectToAction("Index");
 		   
@@ -129,7 +130,7 @@ namespace MvcMovie.Controllers
 		public ActionResult RemoveData(int id)
 		{
 	
-			repo.DeleteMovie(id);
+			repo.DeleteMediaType(id);
 			repo.Save();
 			return RedirectToAction("Index");
 		}

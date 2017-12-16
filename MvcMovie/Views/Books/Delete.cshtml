@@ -1,0 +1,38 @@
+﻿@model MvcMovie.Models.Book
+
+@{
+	ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div ng-controller="MediaDetailCtrl">
+	<h2>{{book.Title}}</h2>
+
+	<form>
+		<div class="form-group">
+
+
+			@*Genre: @Html.DropDownList("bookGenre", "All")
+				Title: @Html.TextBox("SearchString") <br />
+				<input type="submit" value="Filter" />*@
+
+
+		</div>
+	</form>
+
+	<div>{{  book.Author}}</div>
+	<div>{{ book.PublishDate | date: 'yyyy-mm-dd' }}</div>
+	<div>{{  book.Genre }}</div>
+	<div>{{  book.Price | currency}}</div>
+
+	<p>
+		@*@Html.ActionLink("Edit", "Edit", new { id = Model.bookID }) |*@
+		<button type="submit" ng-click="delete(book.ID)" class="btn btn-success">Delete book</button>
+		<button ng-href="/books/Index">Back to Books</button>
+	</p>
+
+</div>
+
+

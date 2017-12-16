@@ -1,0 +1,36 @@
+﻿@model MvcMovie.Models.Book
+
+@{
+	ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div ng-controller="MediaDetailCtrl">
+	<h2>{{book.Title}}</h2>
+
+	<form>
+		<div class="form-group">
+
+
+			@*Genre: @Html.DropDownList("bookGenre", "All")
+				Title: @Html.TextBox("SearchString") <br />
+				<input type="submit" value="Filter" />*@
+
+
+		</div>
+	</form>
+
+
+	<div>{{ book.PublishDate | date: 'yyyy-mm-dd' }}</div>
+	<div>{{  book.Genre }}</div>
+	<div>{{  book.Author }}</div>
+	<div>{{  book.Price | currency}}</div>
+
+
+	<p>
+		@*@Html.ActionLink("Edit", "Edit", new { id = Model.bookID }) |*@
+		<button ng-href="/Books/Index">Back to Books</button>
+	</p>
+
+</div>

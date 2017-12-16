@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MvcMovie.Models.Book>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+
+@* declare ng-controller*@
+
+<div ng-controller="MediaController">
+	<h2>Books Index</h2>
+
+	<form>
+		<div class="form-group">
+
+			<button ng-model="button" go-click={{addBookButton}}>Add a Book</button>
+
+			@*Genre: @Html.DropDownList("bookGenre", "All")
+				Title: @Html.TextBox("SearchString") <br />
+				<input type="submit" value="Filter" />*@
+
+
+		</div>
+	</form>
+	<div class="container-fluid">
+		<div class="row">
+			<h4 class="col-md-3">Title</h4>
+			<h4 class="col-md-2">Release Date</h4>
+			<h4 class="col-md-2">Genre</h4>
+			<h4 class="col-md-2">Price</h4>
+			<h4 class="col-md-3">Rating</h4>
+
+		</div>
+		<div class="books" ng-repeat="book in bookData">
+			<div class="day row">
+				<div class="col-md-3">{{ book.Title }}</div>
+				<div class="col-md-2">{{ book.ReleaseDate | date: 'yyyy-MM-dd' }}</div>
+				<div class="col-md-2">{{  book.Genre }}</div>
+				<div class="col-md-1">{{  book.Price | currency}}</div>
+				<div class="col-md-1">{{ book.Rating}}</div>
+				<div class="col-md-2">
+					<a ng-href="/books/Edit/{{book.ID}}">Edit</a>
+					<a ng-href="/books/Details/{{book.ID}}">Details</a>
+					<a ng-href="/books/Delete/{{book.ID}}">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -7,7 +7,7 @@
 
 @* declare ng-controller*@
 
-<div ng-controller="MoviesController">
+<div ng-controller="MediaController">
     <h2>Movies Index</h2>
 
     <form>
@@ -39,9 +39,9 @@
                 <div class="col-md-1">{{  movie.Price | currency}}</div>
                 <div class="col-md-1">{{ movie.Rating}}</div>
                 <div class="col-md-2">
-                    <a ng-href="/Movies/Edit/{{movie.MovieID}}">Edit</a>
-                    <a ng-href="/Movies/Details/{{movie.MovieID}}">Details</a>
-                    <a ng-href="/Movies/Delete/{{movie.MovieID}}">Delete</a>
+                    <a ng-href="/Movies/Edit/{{movie.ID}}">Edit</a>
+                    <a ng-href="/Movies/Details/{{movie.ID}}">Details</a>
+                    <a ng-href="/Movies/Delete/{{movie.ID}}">Delete</a>
                 </div>
             </div>
         </div>
