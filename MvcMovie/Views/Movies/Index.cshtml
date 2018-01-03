@@ -1,50 +1,37 @@
 ﻿@model IEnumerable<MvcMovie.Models.Movie>
 
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 }
 
-
-@* declare ng-controller*@
-
 <div ng-controller="MediaController">
-    <h2>Movies Index</h2>
+	<h2>Movies Index</h2>
+	<button ng-model="button" go-click={{addMovieButton}} class="btn btn-primary">Add a Movie</button>
+	<div class="container-fluid">
+		<div class="row">
+			<h4 class="col-xs-2">Title</h4>
+			<h4 class="col-xs-2">Director</h4>
+			<h4 class="col-xs-2">Release Date</h4>
+			<h4 class="col-xs-2">Genre</h4>
+			<h4 class="col-xs-1">Price</h4>
+			<h4 class="col-xs-1">Rating</h4>
 
-    <form>
-        <div class="form-group">
-            
-            <button ng-model="button" go-click={{addMovieButton}}>Add a Movie</button>
-              
-                    @*Genre: @Html.DropDownList("movieGenre", "All")
-                    Title: @Html.TextBox("SearchString") <br />
-                    <input type="submit" value="Filter" />*@
-           
-             
-        </div>
-    </form>
-    <div class="container-fluid">
-        <div class="row">
-            <h4 class="col-md-3">Title</h4>
-            <h4 class="col-md-2">Release Date</h4>
-            <h4 class="col-md-2">Genre</h4>
-            <h4 class="col-md-2">Price</h4>
-            <h4 class="col-md-3">Rating</h4>
-
-        </div>
-        <div class="movies" ng-repeat="movie in movieData">
-            <div class="day row">
-                <div class="col-md-3">{{ movie.Title }}</div>
-                <div class="col-md-2">{{ movie.ReleaseDate | date: 'yyyy-MM-dd' }}</div>
-                <div class="col-md-2">{{  movie.Genre }}</div>
-                <div class="col-md-1">{{  movie.Price | currency}}</div>
-                <div class="col-md-1">{{ movie.Rating}}</div>
-                <div class="col-md-2">
-                    <a ng-href="/Movies/Edit/{{movie.ID}}">Edit</a>
-                    <a ng-href="/Movies/Details/{{movie.ID}}">Details</a>
-                    <a ng-href="/Movies/Delete/{{movie.ID}}">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
+		</div>
+		<div class="movies container-fluid" ng-repeat="media in mediaData">
+			<div class="day row">
+				<div class="col-xs-2">{{ media.Title }}</div>
+				<div class="col-xs-2">{{ media.Director }}</div>
+				<div class="col-xs-2">{{ media.ReleaseDate | date: "longDate" }}</div>
+				<div class="col-xs-2">{{  media.Genre }}</div>
+				<div class="col-xs-1">{{  media.Price | currency}}</div>
+				<div class="col-xs-1">{{ media.Rating}}</div>
+				<div class="col-xs-2">
+					<a ng-href="/Movies/Edit/{{media.ID}}">Edit</a>
+					<a ng-href="/Movies/Details/{{media.ID}}">Details</a>
+					<a ng-href="/Movies/Delete/{{media.ID}}">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 

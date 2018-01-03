@@ -3,45 +3,34 @@
 @{
 	ViewBag.Title = "Edit";
 }
-
-<h2>Edit</h2>
-
-
 <div ng-controller="MediaDetailCtrl" class="container">
-	<h2>Add Book</h2>
+	<h2>Edit Details of This Book</h2>
 	<form novalidate class="simple-form">
 		<div class="form-group">
 			<label for="Title">Title</label>
-			<input type="text" class="form-control" id="title" ng-model="book.Title" ng-model-options="{ getterSetter: true }" required />
+			<input type="text" class="form-control" id="title" ng-model="media.Title" ng-model-options="{ getterSetter: true }" required />
 		</div>
 
 		<div class="form-group">
-			<label for="Title">Author</label>
-			<input type="text" class="form-control" id="title" ng-model="book.Author" ng-model-options="{ getterSetter: true }" required />
+			<label for="Director">Author</label>
+			<input type="text" class="form-control" id="author" ng-model="media.Author" />
 		</div>
+
 		<div class="form" name="form-group">
 			<label for="Release Date">Release Date</label>
-			<input type="text" class="form-control" id="releaseDate" ng-model="book.ReleaseDate" name="realeasedate" date />
-			<span ng-show="form.releasedate.$error.date">Use yyyy-mm-dd for release date</span>
+			<input type="date" class="form-control" id="releaseDate" ng-model="media.DatePublished" name="DatePublished" date />
+			<span ng-show="form.DatePublished.$error.date">Use yyyy-mm-dd for release date</span>
 		</div>
-
-
 		<div class="form-group">
 			<label for="Genre">Genre</label>
-			<input type="text" class="form-control" id="genre" ng-model="book.Genre" />
+			<input type="text" class="form-control" id="genre" ng-model="media.Genre" />
 		</div>
-
 		<div class="form-group">
 			<label for="Price">Price</label>
-			<input type="text" class="form-control" id="price" ng-model="book.Price" />
+			<input type="text" class="form-control" id="price" ng-model="media.Price" />
 		</div>
-		<div class="form-group">
-			<label for="Rating">Rating</label>
-			<input type="text" class="form-control" id="rating" ng-model="book.Rating" />
-		</div>
-
-
-		<button type="submit" ng-click="update(book)" class="btn btn-success">Submit</button>
+		<button type="submit" ng-click="update('Books', media)" class="btn btn-success">Submit</button>
+		<button ng-model="button" go-click={{backToBooksButton}} class="btn btn-primary">Back to Books</button>
 	</form>
 </div>
 

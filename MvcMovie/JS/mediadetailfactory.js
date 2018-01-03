@@ -1,26 +1,21 @@
-﻿app.factory('moviedetailfactory', function ($http) {
+﻿app.factory('mediadetailfactory', function ($http) {
 	return {
-		ajaxCalltoMoviesController: function (ID,doThis) {
-			var url = "http://localhost:50941/Movies/GetDetails/" + movieID;
+		ajaxCalltoMediaController: function (model,ID, callback) {
+			var url = "http://localhost:50941/" + model + "/GetDetails/" + ID;
 			console.log(url);
 
 			$http({ method: 'GET', url: url, headers: { 'Content-Type': 'application/json' } }).
 				then(function (response) {
-					doThis(response.data);
-				}).catch(function (response) { });
-		}
-	};
-});
-
-app.factory('bookdetailfactory', function ($http) {
-	return {
-		ajaxCalltoBooksController: function (ID, doThis) {
-			var url = "http://localhost:50941/Books/GetDetails/" + movieID;
-			console.log(url);
-
-			$http({ method: 'GET', url: url, headers: { 'Content-Type': 'application/json' } }).
-				then(function (response) {
-					doThis(response.data);
+					var media = response.data;
+					var releaseDate = media.ReleaseDate;
+					var datePublished = media.DatePublished;
+					if (releaseDate) {
+						media.ReleaseDate = convertDate(releaseDate);
+					}
+					if (datePublished) {
+						media.DatePublished = convertDate(datePublished);
+					}
+					callback(media);
 				}).catch(function (response) { });
 		}
 	};

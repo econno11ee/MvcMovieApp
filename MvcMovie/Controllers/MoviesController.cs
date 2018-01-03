@@ -110,7 +110,7 @@ namespace MvcMovie.Controllers
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPut]
-		 public ActionResult UpdateMovie(Movie movie)
+		 public ActionResult UpdateMedia(Movie movie)
 		{
 			
 				repo.UpdateMediaType(movie);

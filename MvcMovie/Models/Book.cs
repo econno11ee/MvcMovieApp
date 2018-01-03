@@ -6,6 +6,7 @@ namespace MvcMovie.Models
 
 	public class Book : MediaType
 	{
+		
 		[StringLength(50)]
 		public string Author { get; set; }
 		public DateTime? DatePublished { get; set; }

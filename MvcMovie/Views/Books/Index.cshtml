@@ -4,44 +4,31 @@
 	ViewBag.Title = "Index";
 }
 
-
-@* declare ng-controller*@
-
 <div ng-controller="MediaController">
 	<h2>Books Index</h2>
-
-	<form>
-		<div class="form-group">
-
-			<button ng-model="button" go-click={{addBookButton}}>Add a Book</button>
-
-			@*Genre: @Html.DropDownList("bookGenre", "All")
-				Title: @Html.TextBox("SearchString") <br />
-				<input type="submit" value="Filter" />*@
-
-
-		</div>
-	</form>
+	<button ng-model="button" go-click={{addBookButton}} class="btn btn-primary">Add a Book</button>
 	<div class="container-fluid">
 		<div class="row">
-			<h4 class="col-md-3">Title</h4>
-			<h4 class="col-md-2">Release Date</h4>
-			<h4 class="col-md-2">Genre</h4>
-			<h4 class="col-md-2">Price</h4>
-			<h4 class="col-md-3">Rating</h4>
+			<h4 class="col-xs-2">Title</h4>
+			<h4 class="col-xs-2">Author</h4>
+			<h4 class="col-xs-2">Publish Date</h4>
+			<h4 class="col-xs-2">Genre</h4>
+			<h4 class="col-xs-1">Price</h4>
+			<h4 class="col-xs-1">Rating</h4>
 
 		</div>
-		<div class="books" ng-repeat="book in bookData">
+		<div class="movies container-fluid" ng-repeat="media in mediaData">
 			<div class="day row">
-				<div class="col-md-3">{{ book.Title }}</div>
-				<div class="col-md-2">{{ book.ReleaseDate | date: 'yyyy-MM-dd' }}</div>
-				<div class="col-md-2">{{  book.Genre }}</div>
-				<div class="col-md-1">{{  book.Price | currency}}</div>
-				<div class="col-md-1">{{ book.Rating}}</div>
-				<div class="col-md-2">
-					<a ng-href="/books/Edit/{{book.ID}}">Edit</a>
-					<a ng-href="/books/Details/{{book.ID}}">Details</a>
-					<a ng-href="/books/Delete/{{book.ID}}">Delete</a>
+				<div class="col-xs-2">{{ media.Title }}</div>
+				<div class="col-xs-2">{{ media.Author }}</div>
+				<div class="col-xs-2">{{ media.DatePublished | date: "longDate"}}</div>
+				<div class="col-xs-2">{{  media.Genre }}</div>
+				<div class="col-xs-1">{{  media.Price | currency}}</div>
+				<div class="col-xs-1">{{ media.Rating}}</div>
+				<div class="col-xs-2">
+					<a ng-href="/Books/Edit/{{media.ID}}">Edit</a>
+					<a ng-href="/Books/Details/{{media.ID}}">Details</a>
+					<a ng-href="/Books/Delete/{{media.ID}}">Delete</a>
 				</div>
 			</div>
 		</div>

@@ -1,24 +1,22 @@
-﻿app.factory('moviefactory', function ($http) {
+﻿app.factory('mediafactory', function ($http) {
 	return {
-		ajaxCalltoMoviesController: function (doThis) {
-			var url = "http://localhost:50941/Movies/GetData";
+		ajaxCalltoMediaController: function (model, callback) {
+			var url = "http://localhost:50941/" + model + "/GetData";
 			
 			$http({ method: 'GET', url: url, headers: { 'Content-Type': 'application/json' }}).
 				then(function (response) {
-					doThis(response.data);
-				}).catch(function (response) { });
-		}
-	};
-});
-
-app.factory('bookfactory', function ($http) {
-	return {
-		ajaxCalltoBooksController: function (doThis) {
-			var url = "http://localhost:50941/Books/GetData";
-			
-			$http({ method: 'GET', url: url, headers: { 'Content-Type': 'application/json' } }).
-				then(function (response) {
-					doThis(response.data);
+					var mediaTypes = response.data;
+					for (var i = 0; i < mediaTypes.length; i++) {
+						var releaseDate = mediaTypes[i].ReleaseDate;
+						var datePublished = mediaTypes[i].DatePublished;
+						if (releaseDate) {
+							mediaTypes[i].ReleaseDate = convertDate(releaseDate);
+						}
+						if (datePublished) {
+							mediaTypes[i].DatePublished = convertDate(datePublished);
+						}
+					}
+						callback(mediaTypes);
 				}).catch(function (response) { });
 		}
 	};

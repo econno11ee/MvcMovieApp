@@ -1,4 +1,6 @@
-﻿@model MvcMovie.Models.Book
+﻿
+@model MvcMovie.Models.Book
+
 
 @{
 	ViewBag.Title = "Details";
@@ -7,30 +9,21 @@
 <h2>Details</h2>
 
 <div ng-controller="MediaDetailCtrl">
-	<h2>{{book.Title}}</h2>
-
-	<form>
-		<div class="form-group">
-
-
-			@*Genre: @Html.DropDownList("bookGenre", "All")
-				Title: @Html.TextBox("SearchString") <br />
-				<input type="submit" value="Filter" />*@
-
-
-		</div>
-	</form>
-
-
-	<div>{{ book.PublishDate | date: 'yyyy-mm-dd' }}</div>
-	<div>{{  book.Genre }}</div>
-	<div>{{  book.Author }}</div>
-	<div>{{  book.Price | currency}}</div>
-
-
+	<h2>{{media.Title}}</h2>
+	<div>
+		<p><strong>Author:&nbsp;</strong>{{ media.Author }}</p>
+	</div>
+	<div>
+		<p><strong>Publish Date:&nbsp;</strong>{{ media.DatePublished | date: "longDate" }}</p>
+	</div>
+	<div>
+		<p><strong>Genre:&nbsp;</strong>{{  media.Genre }}
+	</div>
+	<div>
+		<p><strong>Price:&nbsp;</strong>{{  media.Price | currency}}
+	</div>
 	<p>
-		@*@Html.ActionLink("Edit", "Edit", new { id = Model.bookID }) |*@
-		<button ng-href="/Books/Index">Back to Books</button>
+		<button ng-model="button" go-click={{backToBooksButton}} class="btn btn-primary">Back to Books</button>
 	</p>
 
 </div>

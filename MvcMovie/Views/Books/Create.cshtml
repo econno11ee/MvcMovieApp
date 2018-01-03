@@ -11,44 +11,34 @@
 	<form class="simple-form" name="createForm" novalidate>
 		<div class="form-group" ng-class="{ 'has-error' : createForm.Title.$invalid || createForm.Title.$pristine }">
 			<label>Title</label>
-			<input type="text" class="form-control" id="title" ng-model="Book.Title" name="Title" required />
+			<input type="text" class="form-control" id="title" ng-model="media.Title" name="Title" required />
 			<p class="label label-danger" ng-show="createForm.Title.$invalid || createForm.Title.$pristine">Required!</p>
 		</div>
-
-		<div class="form-group">
-			<label for="Author">Author</label>
-			<input type="text" class="form-control" id="rating" ng-model="Book.Author" />
+		<div class="form-group" ">
+			<label>Author</label>
+			<input type="text" class="form-control" id="author" ng-model="media.Author" name="Title" required />
 		</div>
 
-		<div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.ReleaseDate.$invalid && !createForm.ReleaseDate.$pristine }">
-			<label>Release Date</label>
-			<input type="date" class="form-control" name="releaseDate" ng-model="Book.ReleaseDate" placeholder="yyyy-mm-dd" min="1800-01-01" />
-			<span class="label label-danger" ng-show="helpForm.Book.Releasedate.$error.date">Date must be entered as yyyy-MM-dd</span>
+		<div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.DatePublished.$invalid && !createForm.DatePublished.$pristine }">
+			<label>Publish Date</label>
+			<input type="date" class="form-control" name="DatePublished" ng-model="media.DatePublished" placeholder="01/01/1000" min="January 1, 1800" />
+			<span class="label label-danger" ng-show="helpForm.media.DatePublished.$error.date">Date must be entered as MM/DD/YYYY</span>
 		</div>
-
-
 		<div class="form-group">
 			<label for="Genre">Genre</label>
-			<select type="text" class="form-control" id="genre" ng-model="Book.Genre">
+			<select type="text" class="form-control" id="genre" ng-model="media.Genre">
 				<option ng-repeat="genre in availableGenres" value="{{genre.name}}">{{genre.name}}</option>
 			</select>
 		</div>
 
 		<div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.Price.$invalid && !createForm.Price.$pristine }">
 			<label for="Price">Price</label>
-			<input type="number" class="form-control" id="price" ng-model=Book.Price>
+			<input type="number" class="form-control" id="price" ng-model=media.Price>
 		</div>
-
-		<button ng-disabled="createForm.$invalid" type="submit" ng-click="submit(Book)" class="btn btn-default">Submit</button>
+		<button ng-disabled="createForm.$invalid" type="submit" ng-click="submit('Books', media)" class="btn btn-success">Submit</button>
+		<button ng-model="button" go-click={{backToBooksButton}} class="btn btn-primary">Back to Books</button>
 	</form>
 </div>
-
-
-
-
-@*<div>
-		@Html.ActionLink("Back to List", "Index")
-	</div>*@
 
 @section Scripts {
 	@Scripts.Render("~/bundles/jqueryval")

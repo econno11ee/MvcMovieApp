@@ -1,38 +1,33 @@
 ﻿@model MvcMovie.Models.Movie
 
 @{
-    ViewBag.Title = "Delete";
+	ViewBag.Title = "Delete";
 }
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div ng-controller="MediaDetailCtrl">
-    <h2>{{movie.Title}}</h2>
-
-    <form>
-        <div class="form-group">
-
-
-            @*Genre: @Html.DropDownList("movieGenre", "All")
-                Title: @Html.TextBox("SearchString") <br />
-                <input type="submit" value="Filter" />*@
-
-
-        </div>
-    </form>
-
-
-    <div>{{ movie.ReleaseDate | date: 'yyyy-mm-dd' }}</div>
-    <div>{{  movie.Genre }}</div>
-    <div>{{  movie.Price | currency}}</div>
-    <div>{{ movie.Rating}}</div>
-
-    <p>
-        @*@Html.ActionLink("Edit", "Edit", new { id = Model.MovieID }) |*@
-        <button type="submit" ng-click="delete(movie.MovieID)" class="btn btn-success">Delete Movie</button>
-        <button ng-href="/Movies/Index">Back to Movies</button>
-    </p>
+	<h2>{{media.Title}}</h2>
+	<div>
+		<p><strong>Director:&nbsp;</strong>{{ media.Director }}</p>
+	</div>
+	<div>
+		<p><strong>Release Date:&nbsp;</strong>{{ media.ReleaseDate | date: longdate }}</p>
+	</div>
+	<div>
+		<p><strong>Genre:&nbsp;</strong>{{  media.Genre }}
+	</div>
+	<div>
+		<p><strong>Price:&nbsp;</strong>{{  media.Price | currency}}
+	</div>
+	<div>
+		<p><strong>Rating:&nbsp;</strong>{{ media.Rating}}
+	</div>
+	<p>
+		<button type="submit" ng-click="delete('Movies', media.ID)" class="btn btn-success">Delete Movie</button>
+		<button ng-model="button" go-click={{backToMoviesButton}} class="btn btn-default">Back to Movies</button>
+	</p>
 
 </div>
 

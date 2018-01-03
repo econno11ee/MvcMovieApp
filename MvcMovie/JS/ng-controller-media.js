@@ -1,35 +1,24 @@
 ﻿//Create controller
 //here, $scope is used to share data between view and controller
-app.controller("MediaController", function ($scope, moviefactory, bookfactory) {
-	$scope.movieData = [];
+app.controller("MediaController", function ($scope, mediafactory) {
+	var urlParts = window.location.href.split('/');
+	var model = urlParts[3];
+	console.log(model);
+	$scope.mediaData = [];
 	$scope.addMovieButton = "/Movies/Create"
-
-	$scope.bookData = [];
 	$scope.addBookButton = "/Books/Create"
 
    
 	//Get Movies Code
-	$scope.getMovies = function (doThis) {
-		moviefactory.ajaxCalltoMoviesController(doThis);
+	$scope.getMedia = function (model, callback) {
+		mediafactory.ajaxCalltoMediaController(model, callback);
 	};
-	$scope.assignTomovieData = function (data) {
-		$scope.movieData = data;
-	};
-
-	$scope.getMovies($scope.assignTomovieData);
-
-	//Get Books Code
-	$scope.getBooks = function (doThis) {
-		bookfactory.ajaxCalltoBooksController(doThis);
-	};
-	$scope.assignTobookData = function (data) {
-		$scope.bookData = data;
+	$scope.assignToMediaData = function (data) {
+		$scope.mediaData = data;
 	};
 
-	$scope.getBooks($scope.assignTobookData);
-
+	$scope.getMedia(model,$scope.assignToMediaData);
 	
-  
 });
 
 app.directive('goClick', function ($window) {

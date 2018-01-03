@@ -6,31 +6,24 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this book?</h3>
 <div ng-controller="MediaDetailCtrl">
-	<h2>{{book.Title}}</h2>
-
-	<form>
-		<div class="form-group">
-
-
-			@*Genre: @Html.DropDownList("bookGenre", "All")
-				Title: @Html.TextBox("SearchString") <br />
-				<input type="submit" value="Filter" />*@
-
-
-		</div>
-	</form>
-
-	<div>{{  book.Author}}</div>
-	<div>{{ book.PublishDate | date: 'yyyy-mm-dd' }}</div>
-	<div>{{  book.Genre }}</div>
-	<div>{{  book.Price | currency}}</div>
-
+	<h2>{{media.Title}}</h2>
+	<div>
+		<p><strong>Director:&nbsp;</strong>{{ media.Author }}</p>
+	</div>
+	<div>
+		<p><strong>Date Published:&nbsp;</strong>{{ media.DatePublished | date: "longDate" }}</p>
+	</div>
+	<div>
+		<p><strong>Genre:&nbsp;</strong>{{  media.Genre }}
+	</div>
+	<div>
+		<p><strong>Price:&nbsp;</strong>{{  media.Price | currency}}
+	</div>
 	<p>
-		@*@Html.ActionLink("Edit", "Edit", new { id = Model.bookID }) |*@
-		<button type="submit" ng-click="delete(book.ID)" class="btn btn-success">Delete book</button>
-		<button ng-href="/books/Index">Back to Books</button>
+		<button type="submit" ng-click="delete('Books', media.ID)" class="btn btn-success">Delete Book</button>
+		<button ng-model="button" go-click={{backToBooksButton}} class="btn btn-default">Back to Books</button>
 	</p>
 
 </div>

@@ -1,55 +1,60 @@
 ﻿@model MvcMovie.Models.Movie
 
 @{
-    ViewBag.Title = "Create";
+	ViewBag.Title = "Create";
 }
 
 <div ng-controller="CreateMediaCtrl" class="container">
-    <h2>Add Movie</h2>
-    <div id="messages" class="alert alert-success" ng-show="messages" ng-bind="messages"></div>
+	<h2>Add Movie</h2>
+	<div id="messages" class="alert alert-success" ng-show="messages" ng-bind="messages"></div>
 <div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Sending…</div>
-    <form class="simple-form" name="createForm" novalidate>
-        <div class="form-group" ng-class="{ 'has-error' : createForm.Title.$invalid || createForm.Title.$pristine }">
-            <label>Title</label>
-            <input type="text" class="form-control" id="title" ng-model="Movie.Title" name="Title" required/>
-            <p class="label label-danger" ng-show="createForm.Title.$invalid || createForm.Title.$pristine">Required!</p>
-        </div>
+<form class="simple-form" name="createForm" novalidate>
+	<div class="form-group" ng-class="{ 'has-error' : createForm.Title.$invalid || createForm.Title.$pristine }">
+		<label>Title</label>
+		<input type="text" class="form-control" id="title" ng-model="media.Title" name="Title" required />
+		<p class="label label-danger" ng-show="createForm.Title.$invalid || createForm.Title.$pristine">Required!</p>
+	</div>
+	<div class="form-group"">
+		<label>Director</label>
+		<input type="text" class="form-control" id="director" ng-model="media.Director" name="Title" required />
+	</div>
 
-        <div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.ReleaseDate.$invalid && !createForm.ReleaseDate.$pristine }">
-            <label>Release Date</label>
-            <input type="date" class="form-control" name="releaseDate" ng-model="Movie.ReleaseDate" placeholder="yyyy-mm-dd" min="1800-01-01" />
-            <span class="label label-danger" ng-show="helpForm.Movie.Releasedate.$error.date">Date must be entered as yyyy-MM-dd</span>
-        </div>
+	<div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.ReleaseDate.$invalid && !createForm.ReleaseDate.$pristine }">
+		<label>Release Date</label>
+		<input type="date" class="form-control" name="releaseDate" ng-model="media.ReleaseDate" placeholder="01/01/1800" min="January 1, 1800" />
+		<span class="label label-danger" ng-show="helpForm.media.Releasedate.$error.date">Date must be entered as MM/DD/YYYY</span>
+	</div>
 
 
-        <div class="form-group">
-            <label for="Genre">Genre</label>
-            <select type="text" class="form-control" id="genre" ng-model="Movie.Genre">
-                <option ng-repeat="genre in availableGenres" value="{{genre.name}}">{{genre.name}}</option>
-            </select>
-        </div>
+	<div class="form-group">
+		<label for="Genre">Genre</label>
+		<select type="text" class="form-control" id="genre" ng-model="media.Genre">
+			<option ng-repeat="genre in availableGenres" value="{{genre.name}}">{{genre.name}}</option>
+		</select>
+	</div>
 
-        <div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.Price.$invalid && !createForm.Price.$pristine }">
-            <label for="Price">Price</label>
-            <input type="number" class="form-control" id="price" ng-model=Movie.Price>
-        </div>
-        <div class="form-group">
-            <label for="Rating">Rating</label>
-            <input type="text" class="form-control" id="rating" ng-model="Movie.Rating"/>
-        </div>
-       
+	<div class="form-group" name="createForm" ng-class="{ 'has-error' : createForm.Price.$invalid && !createForm.Price.$pristine }">
+		<label for="Price">Price</label>
+		<input type="number" class="form-control" id="price" ng-model=media.Price>
+	</div>
+	<div class="form-group">
+		<label for="Rating">Rating</label>
+		<input type="text" class="form-control" id="rating" ng-model="media.Rating" />
+	</div>
 
-        <button ng-disabled="createForm.$invalid" type="submit" ng-click="submit(Movie)" class="btn btn-default">Submit</button>
-    </form>
+
+	<button ng-disabled="createForm.$invalid" type="submit" ng-click="submit('Movies', media)" class="btn btn-success">Submit</button>
+	<button ng-model="button" go-click={{backToMoviesButton}} class="btn btn-primary">Back to Movies</button>
+</form>
 </div>
 
 
 
 
 @*<div>
-    @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Back to List", "Index")
 </div>*@
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+	@Scripts.Render("~/bundles/jqueryval")
 }
